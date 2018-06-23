@@ -10,24 +10,25 @@ import java.util.Map;
 
 public class Main {
     private static Main mainInstance;
-    private Map<String, Friend> friendsMap;
+    private Map<String, Person> personMap;
     private Master masterThread;
+    private int messagesCount = 0;
 
-    protected static Main getInstance() {
+    static Main getInstance() {
         if (mainInstance == null) {
             return new Main();
         }
         return mainInstance;
     }
 
-    public Master getMasterThread() {
+    Master getMasterThread() {
         return masterThread;
     }
 
     public static void main(String[] args) {
         mainInstance = getInstance();
-        mainInstance.initMasterThread();
         mainInstance.initializeFriends();
+        mainInstance.initMasterThread();
     }
 
     private void initMasterThread() {
@@ -36,26 +37,31 @@ public class Main {
         masterThread.start();
     }
 
-    public Map<String, Friend> getFriendsMap() {
-        return friendsMap;
+    Map<String, Person> getPersonMap() {
+        return personMap;
     }
 
     private void initializeFriends() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(new File("C:\\Users\\Lenovo\\IdeaProjects\\DS Algorithms\\src\\comparativestudies\\calls.txt")));
-            String line = null;
-            friendsMap = new HashMap<>();
+            String line;
+            personMap = new HashMap<>();
             while ((line = reader.readLine()) != null) {
                 String namesInfo = line.substring(1, line.length() - 2);
-                Friend friend = new Friend();
+                Person person = new Person();
                 String contactsInfo = namesInfo.split(" ")[1];
                 String[] contacts = contactsInfo.substring(1, contactsInfo.length() - 1).split(",");
-                friend.addContacts(Arrays.asList(contacts));
-                friend.setName(namesInfo.split(",")[0]);
-                friendsMap.put(friend.getName(), friend);
+                person.addContacts(Arrays.asList(contacts));
+                person.setName(namesInfo.split(",")[0]);
+                personMap.put(person.getName(), person);
+                messagesCount += contacts.length;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    int findMessagesCount() {
+        return messagesCount * 2;
     }
 }

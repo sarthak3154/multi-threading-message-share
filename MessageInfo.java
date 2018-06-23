@@ -1,25 +1,31 @@
 package comparativestudies;
 
-public class MessageInfo {
+class MessageInfo {
     private String sender;
     private String receiver;
     private MessageType type;
+    private long timestamp;
 
-    public MessageInfo(String sender, String receiver, MessageType type) {
+    MessageInfo(String sender, String receiver, MessageType type, long timestamp) {
         this.sender = sender;
         this.receiver = receiver;
         this.type = type;
+        this.timestamp = timestamp;
     }
 
-    public String getSender() {
+    String getSender() {
         return sender;
     }
 
-    public String getReceiver() {
+    String getReceiver() {
         return receiver;
     }
 
-    public MessageType getType() {
+    MessageType getType() {
         return type;
+    }
+
+    long getTimestamp() {
+        return timestamp;
     }
 }
